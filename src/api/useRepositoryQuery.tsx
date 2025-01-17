@@ -35,10 +35,15 @@ export const useRepositoryQuery = () => {
     isFetching,
     fetchNextPage,
     hasNextPage,
-  } = useInfiniteQuery(['repositories'], () => fetcher(), {
-    getNextPageParam: ({ nextPage }) => nextPage,
-    staleTime: Infinity,
-  });
+  } = useInfiniteQuery(
+    ['repositories'],
+    ({ pageParam = 0 }) => fetcher(pageParam),
+    {
+      getNextPageParam: ({ nextPage }) => nextPage,
+      staleTime: Infinity,
+    }
+  );
+
   return {
     data,
     isError,
