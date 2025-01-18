@@ -1,6 +1,6 @@
 import { Modal, Form, Input } from 'antd';
 
-import { RepositoryProps } from '@/helpers/types';
+import { RepositoryProps } from '@/helpers';
 
 interface EditModalProps extends RepositoryProps {
   isVisible: boolean;

@@ -4,3 +4,4 @@ export type RepositoryProps = {
   avatar_url: string;
   description: string;
 };
+

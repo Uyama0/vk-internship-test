@@ -1,6 +1,6 @@
 import { makeAutoObservable } from 'mobx';
 
-import { RepositoryProps } from '@/helpers/types';
+import { RepositoryProps } from '@/helpers';
 
 class RepositoriesStore {
   repositories: RepositoryProps[] = [];
