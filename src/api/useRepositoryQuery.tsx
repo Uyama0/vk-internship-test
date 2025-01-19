@@ -22,11 +22,14 @@ const fetcher = async ({ pageParam, sort, order }: FetcherProps) => {
     order,
   });
 
-  const response = await fetch(url, {
-    headers: {
-      Authorization: `Bearer ${githubApiToken}`,
-    },
-  });
+  const headers: HeadersInit = {};
+
+  if (githubApiToken) {
+    headers.Authorization = `Bearer ${githubApiToken}`;
+  }
+
+  const response = await fetch(url, headers);
+
   if (!response.ok) {
     throw new Error('Ошибка при загрузке данных');
   }
