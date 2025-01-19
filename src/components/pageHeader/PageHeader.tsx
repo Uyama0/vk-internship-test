@@ -1,4 +1,4 @@
-import { Flex, Typography } from 'antd';
+import { Flex } from 'antd';
 import { Header } from 'antd/es/layout/layout';
 
 import { SortRepositories } from '../sortRepositories';

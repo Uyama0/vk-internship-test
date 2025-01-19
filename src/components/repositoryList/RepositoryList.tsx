@@ -1,4 +1,4 @@
-import { Flex } from 'antd';
+import { Flex, Spin } from 'antd';
 import { Observer } from 'mobx-react-lite';
 
 import { RepositorySnippet } from '../repositorySnippet';
@@ -14,15 +14,16 @@ export const RepositoryList: React.FC = () => {
   return (
     <LoadErrorWrapper isLoading={isLoading} isError={isError}>
       <InfiniteScroll isFetching={isFetching} fetchNextPage={fetchNextPage}>
-      <Observer>
-        {() => (
-          <Flex vertical gap="middle">
-            {repositoriesStore.repositories.map((repository) => (
-              <RepositorySnippet key={repository.id} {...repository} />
-            ))}
-          </Flex>
-        )}
-      </Observer>
+        <Observer>
+          {() => (
+            <Flex vertical gap="middle">
+              {repositoriesStore.repositories.map((repository) => (
+                <RepositorySnippet key={repository.id} {...repository} />
+              ))}
+              {isFetching && <Spin size="large" />}
+            </Flex>
+          )}
+        </Observer>
       </InfiniteScroll>
     </LoadErrorWrapper>
   );
