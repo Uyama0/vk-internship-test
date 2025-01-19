@@ -13,6 +13,7 @@ npm run start
 ## Стек технологий
 
 - React Query
+- MobX
 - Ant Design
 - React Router
 - TypeScript
