@@ -4,7 +4,7 @@ export const buildUrlWithParams = (
 ): string => {
   const queryParams = new URLSearchParams();
 
-  for (let key in params) {
+  for (const key in params) {
     if (params[key] === null || typeof params[key] === 'undefined') continue;
 
     const value = String(params[key]);

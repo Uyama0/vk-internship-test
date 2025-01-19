@@ -15,7 +15,7 @@ export const useSetSearchParams = () => {
   const setSearchParams = useCallback(
     (updates: QueryParams) => {
       setParams((prev) => {
-        for (let key in updates) {
+        for (const key in updates) {
           const value = updates[key as Key];
 
           if (value === '' || value === undefined) {

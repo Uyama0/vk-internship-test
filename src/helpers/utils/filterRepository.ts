@@ -1,7 +1,7 @@
 import { RepositoryProps } from './types';
 
 export const filterRepository = (
-  data: Record<string, number | boolean | { [key: string]: any }[]>
+  data: Record<string, number | boolean | Record<string, any>[]>
 ): RepositoryProps[] => {
   if (!Array.isArray(data?.items)) return [];
 
