@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Avatar, Button, Card, Flex } from 'antd';
 
-import { RepositoryProps } from '@/helpers/types';
+import { RepositoryProps } from '@/helpers/utils/types';
 import { repositoriesStore } from '@/app/store';
 import { EditModal } from '../editModal';
 

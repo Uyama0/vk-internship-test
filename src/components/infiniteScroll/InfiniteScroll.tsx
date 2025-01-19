@@ -23,6 +23,7 @@ export const InfiniteScroll = ({
       100
     ) {
       if (!isFetchingRef.current) {
+        isFetchingRef.current = true;
         fetchNextPage();
       }
     }

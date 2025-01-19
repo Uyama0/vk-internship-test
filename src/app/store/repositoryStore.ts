@@ -13,6 +13,10 @@ class RepositoriesStore {
     this.repositories = data;
   }
 
+  addRepositories(data: RepositoryProps[]) {
+    this.repositories = [...this.repositories, ...data];
+  }
+
   deleteRepository(id: number) {
     this.repositories = this.repositories.filter(
       (repository) => repository.id !== id

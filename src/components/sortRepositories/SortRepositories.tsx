@@ -1,4 +1,4 @@
-import { Dropdown, Space, Typography } from 'antd';
+import { Dropdown, Button, Space, Typography } from 'antd';
 import type { MenuProps } from 'antd';
 
 import { items } from '@/helpers';
@@ -19,7 +19,9 @@ export const SortRepositories: React.FC = () => {
   return (
     <Dropdown menu={{ items, onClick: handleMenuClick }}>
       <Typography.Link>
-        <Space>Сортировать</Space>
+        <Button type="default">
+          <Space>Сортировать</Space>
+        </Button>
       </Typography.Link>
     </Dropdown>
   );

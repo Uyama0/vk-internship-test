@@ -14,13 +14,15 @@ export const RepositoryList: React.FC = () => {
   return (
     <LoadErrorWrapper isLoading={isLoading} isError={isError}>
       <InfiniteScroll isFetching={isFetching} fetchNextPage={fetchNextPage}>
-        <Flex vertical gap="middle">
-          {repositoriesStore.repositories.map((repository) => (
-            <Observer>
-              {() => <RepositorySnippet key={repository.id} {...repository} />}
-            </Observer>
-          ))}
-        </Flex>
+      <Observer>
+        {() => (
+          <Flex vertical gap="middle">
+            {repositoriesStore.repositories.map((repository) => (
+              <RepositorySnippet key={repository.id} {...repository} />
+            ))}
+          </Flex>
+        )}
+      </Observer>
       </InfiniteScroll>
     </LoadErrorWrapper>
   );

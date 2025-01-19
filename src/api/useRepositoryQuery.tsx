@@ -1,10 +1,9 @@
-import { useEffect } from 'react';
-
+import { useEffect, useState } from 'react';
 import { useInfiniteQuery } from 'react-query';
 import { useSearchParams } from 'react-router-dom';
 
 import { filterRepository } from '@/helpers/utils/filterRepository';
-import { githubApiHost, githubApiToken } from '@/helpers/utils/env';
+import { githubApiHost, githubApiToken } from '@/helpers';
 import { repositoriesStore } from '@/app/store';
 import { buildUrlWithParams } from '@/helpers';
 
@@ -33,16 +32,16 @@ const fetcher = async ({ pageParam, sort, order }: FetcherProps) => {
   }
   const data = await response.json();
 
-  repositoriesStore.setRepositories([
-    ...repositoriesStore.repositories,
-    ...filterRepository(data),
-  ]);
-
   return { data, nextPage: pageParam + 1 };
 };
 
 export const useRepositoryQuery = () => {
   const [params] = useSearchParams();
+  const [queryKey, setQueryKey] = useState(() => [
+    'repositories',
+    params.get('sort'),
+    params.get('order'),
+  ]);
   const sort = params.get('sort');
   const order = params.get('order');
 
@@ -56,8 +55,8 @@ export const useRepositoryQuery = () => {
     fetchNextPage,
     hasNextPage,
   } = useInfiniteQuery(
-    ['repositories'],
-    ({ pageParam = 0 }) => fetcher({ pageParam, sort, order }),
+    queryKey,
+    ({ pageParam = 1 }) => fetcher({ pageParam, sort, order }),
     {
       getNextPageParam: ({ nextPage }) => nextPage,
       staleTime: Infinity,
@@ -65,8 +64,27 @@ export const useRepositoryQuery = () => {
   );
 
   useEffect(() => {
-    refetch();
-  }, [sort, order, refetch]);
+    setQueryKey(['repositories', sort, order]);
+  }, [sort, order]);
+
+  useEffect(() => {
+    refetch().then((response) => {
+      const { data } = response;
+      repositoriesStore.setRepositories(
+        filterRepository(data?.pages[data.pages.length - 1].data)
+      );
+    });
+  }, [queryKey, refetch]);
+
+  const handleFetchNextPage = () => {
+    fetchNextPage().then((response) => {
+      const { data } = response;
+
+      repositoriesStore.addRepositories(
+        filterRepository(data?.pages[data.pages.length - 1].data)
+      );
+    });
+  };
 
   return {
     data,
@@ -76,6 +94,6 @@ export const useRepositoryQuery = () => {
     refetch,
     isFetching,
     hasNextPage,
-    fetchNextPage,
+    fetchNextPage: handleFetchNextPage,
   };
 };
